@@ -1,5 +1,3 @@
-Claro, aqui está a documentação com a tabela `personal_access_tokens` adicionada ao final da seção de estrutura do banco de dados.
-
 # API de Review de Livros
 
 Esta é a documentação da nossa API de reviews de livros. O objetivo é ter uma plataforma simples onde usuários podem avaliar livros e a administração pode moderar o conteúdo através de um sistema de denúncias.
