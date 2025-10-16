@@ -6,6 +6,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\AuthService;
 use Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -13,47 +14,41 @@ use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
+    public function __construct(private AuthService $authService)
+    {
+    }
+
     public function register(RegisterRequest $request): jsonResponse
     {
-        $user = User::query()->create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-            'user_type' => 'user',
-        ]);
+        $result = $this->authService->register($request->validated());
 
-        Auth::login($user);
-
-        return $this->generateTokenResponse($user, 201);
+        return response()->json([
+            'user' => new UserResource($result['user']),
+            'token' => $result['token'],
+        ], 201);
 
     }
 
     public function login(LoginRequest $request): jsonResponse
     {
 
-        if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return response()->json([
-                'message' => 'Invalid credentials.',
-            ], 401);
+        $result = $this->authService->login($request->validated());
+
+        if (is_null($result)) {
+            return response()->json(['message' => 'Invalid credentials.'], 401);
         }
 
-        return $this->generateTokenResponse(Auth::user());
+        return response()->json([
+            'user' => new UserResource($result['user']),
+            'token' => $result['token'],
+        ]);
     }
 
     public function logout(Request $request): Response
     {
-        $request->user()->currentAccessToken()->delete();
+        $this->authService->logout($request->user());
 
         return response()->noContent();
     }
 
-    protected function generateTokenResponse(User $user, int $statusCode = 200): JsonResponse
-    {
-
-        return response()->json([
-            'user' => new UserResource($user),
-            'token' => $user->createToken('default')->plainTextToken,
-        ], $statusCode);
-
-    }
 }
