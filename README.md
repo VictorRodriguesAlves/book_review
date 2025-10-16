@@ -12,8 +12,8 @@ Esta é a documentação da nossa API de reviews de livros. O objetivo é ter um
 
 Para a maioria das operações, como postar uma review ou denunciar outra, o usuário precisa estar autenticado. O fluxo é o padrão:
 
-1.  **Registre-se** no endpoint `/register`.
-2.  **Faça login** em `/login` para receber um token de acesso.
+1.  **Registre-se** no endpoint `/auth/register`.
+2.  **Faça login** em `/auth/login` para receber um token de acesso.
 3.  **Envie o token** no cabeçalho `Authorization` de suas requisições futuras, no formato `Bearer {seu_token}`.
 
 ---
@@ -26,9 +26,9 @@ Abaixo estão todos os endpoints disponíveis, agrupados por funcionalidade.
 
 | Método | Endpoint | Descrição |
 | :--- | :--- | :--- |
-| `POST` | `/register` | Cria uma nova conta de usuário. |
-| `POST` | `/login` | Autentica um usuário e retorna um token de acesso. |
-| `POST` | `/logout` | Invalida o token de acesso do usuário logado. |
+| `POST` | `/auth/register` | Cria uma nova conta de usuário. |
+| `POST` | `/auth/login` | Autentica um usuário e retorna um token de acesso. |
+| `POST` | `/auth/logout` | Invalida o token de acesso do usuário logado. |
 
 ### Livros e Reviews
 
