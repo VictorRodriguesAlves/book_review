@@ -30,13 +30,13 @@ Abaixo estão todos os endpoints disponíveis, agrupados por funcionalidade.
 
 ### Livros e Reviews
 
-| Método | Endpoint | Descrição |
-| :--- | :--- | :--- |
-| `GET` | `/books` | Retorna uma lista de todos os livros. |
-| `POST` | `/books` | Adiciona um novo livro ao catálogo. |
+| Método | Endpoint | Descrição                                 |
+| :--- | :--- |:------------------------------------------|
+| `GET` | `/books` | Retorna uma lista de todos os livros.     |
+| `POST` | `/books` | Adiciona um novo livro ao catálogo. **(Apenas Admins)**       |
 | `GET` | `/books/{book_id}` | Busca os detalhes de um livro específico. |
-| `GET` | `/books/{book_id}/reviews`| Lista todas as reviews de um livro. |
-| `POST` | `/books/{book_id}/reviews`| Publica uma nova review para um livro. |
+| `GET` | `/books/{book_id}/reviews`| Lista todas as reviews de um livro.       |
+| `POST` | `/books/{book_id}/reviews`| Publica uma nova review para um livro.    |
 
 ### Moderação (Denúncias)
 

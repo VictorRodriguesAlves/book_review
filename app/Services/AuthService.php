@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -7,10 +8,6 @@ use Auth;
 
 class AuthService
 {
-    public function __construct()
-    {
-    }
-
     public function register(array $data): array
     {
 
