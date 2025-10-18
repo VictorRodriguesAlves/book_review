@@ -19,6 +19,16 @@ class BookController extends Controller
     }
 
 
+    public function list(): JsonResponse
+    {
+        $books = $this->bookService->getAllBooks();
+
+        return response()->json([
+            'success' => true,
+            'data' => $books
+        ]);
+    }
+
     public function store(StoreBookRequest $request): JsonResponse
     {
         $this->bookService->createBook($request->validated());

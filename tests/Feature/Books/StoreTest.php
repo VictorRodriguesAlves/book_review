@@ -65,7 +65,7 @@ it('should not be possible to add a book if the user is not an administrator', f
     ]);
 });
 
-it('should return a 403 unauthorized error if an unauthenticated user attempts to add a book', function () {
+it('should return a unauthorized error if an unauthenticated user attempts to add a book', function () {
 
     //arrange
     Auth::logout();

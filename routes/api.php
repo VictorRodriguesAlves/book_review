@@ -22,6 +22,7 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::prefix('books')->group(function () {
+        Route::get('/', [BookController::class, 'list'])->name('books.list');
         Route::post('/', [BookController::class, 'store'])->name('books.store');
     });
 
