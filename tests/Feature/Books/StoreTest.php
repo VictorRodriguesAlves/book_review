@@ -65,12 +65,55 @@ it('should not be possible to add a book if the user is not an administrator', f
     ]);
 });
 
+it('should return a 403 unauthorized error if an unauthenticated user attempts to add a book', function () {
+
+    //arrange
+    Auth::logout();
+    $data = [
+        'title' => 'Test book',
+        'description' => 'Test book',
+    ];
+
+    //act
+    $response = $this->postJson(route('books.store'), $data);
+
+    //assert
+    $response->assertUnauthorized();
+    $this->assertDatabaseCount('books', 0);
+    $this->assertDatabaseMissing('books', [
+        'title' => 'Test book',
+        'description' => 'Test book',
+    ]);
+
+});
+
 it('should return an error when sending empty fields', function () {
 
     //arrange
     $data = [
         'title' => '',
         'description' => '',
+    ];
+
+    //act
+    $response = $this->postJson(route('books.store'), $data);
+
+    //assert
+    $response->assertStatus(422)
+        ->assertInvalid(['title', 'description']);
+    $this->assertDatabaseCount('books', 0);
+    $this->assertDatabaseMissing('books', [
+        'title' => 'Test book',
+        'description' => 'Test book',
+    ]);
+});
+
+it('should return an error when the title or description is longer than 255 characters', function () {
+
+    //arrange
+    $data = [
+        'title' => Str::random(256),
+        'description' => Str::random(256),
     ];
 
     //act
