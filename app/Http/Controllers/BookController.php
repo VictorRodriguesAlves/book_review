@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
+use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Services\BookService;
 use Auth;
@@ -26,6 +27,14 @@ class BookController extends Controller
         return response()->json([
             'success' => true,
             'data' => $books
+        ]);
+    }
+
+    public function show(Book $book): JsonResponse
+    {
+        return response()->json([
+            'success' => true,
+            'data' => new BookResource($book)
         ]);
     }
 
