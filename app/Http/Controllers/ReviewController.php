@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -16,11 +17,21 @@ class ReviewController extends Controller
     {
     }
 
+    public function list(Book $book): JsonResponse
+    {
+        $data = $this->reviewService->getReviewsByBook($book);
+
+        return response()->json([
+            'success' => true,
+            'data' => $data
+        ]);
+    }
+
     public function store(StoreReviewRequest $request, Book $book): JsonResponse
     {
         $validatedData = $request->validated();
 
-        $this->reviewService->createReview($validatedData, $book);
+        $this->reviewService->createBookReview($validatedData, $book);
 
         return response()->json([
             'success' => true,

@@ -26,8 +26,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [BookController::class, 'list'])->name('books.list');
         Route::get('/{book}', [BookController::class, 'show'])->name('books.show');
         Route::post('/', [BookController::class, 'store'])->name('books.store');
+        Route::get('/{book}/reviews', [ReviewController::class, 'list'])->name('books.reviews.list');
         Route::post('/{book}/reviews', [ReviewController::class, 'store'])->name('books.reviews.store');
-
     });
 
 });
